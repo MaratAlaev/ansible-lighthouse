@@ -1,0 +1,5 @@
+---
+# defaults file for lighthouse-role
+nginx_config:
+
+nginx_host:

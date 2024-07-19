@@ -1,0 +1,32 @@
+---
+# tasks file for lighthouse-role
+    - name: Install Nginx
+      become: true
+      ansible.builtin.apt:
+        name: nginx 
+        state: latest
+    - name: Edit config Nginx
+      become: true
+      ansible.builtin.template:
+        mode: 0755
+        src: templates/nginx.j2
+        dest: /etc/nginx/nginx.conf
+    - name: Edit host Nginx
+      become: true
+      ansible.builtin.template:
+        mode: 0755
+        src:  templates/virtHost.j2
+        dest: /etc/nginx/sites-available/default
+      notify: Restart nginx
+
+    - name: Install git
+      become: true
+      ansible.builtin.apt:
+        name: git 
+        state: latest
+
+    - name: Install lighthouse
+      become: true
+      ansible.builtin.git:
+        repo: "https://github.com/VKCOM/lighthouse.git"
+        dest: /var/www/lighthouse
